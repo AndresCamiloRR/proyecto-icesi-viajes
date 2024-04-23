@@ -1,7 +1,7 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
-import co.edu.icesi.viajes.proyectoicesiviajes.domain.National_ID_Type;
-import co.edu.icesi.viajes.proyectoicesiviajes.repository.National_ID_TypeRepository;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.Role;
+import co.edu.icesi.viajes.proyectoicesiviajes.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -11,22 +11,23 @@ import java.util.Optional;
 
 @Scope("singleton")
 @Service
-public class National_ID_TypeServiceImpl implements National_ID_TypeService{
+public class RoleServiceImpl implements RoleService{
 
     @Autowired
-    private National_ID_TypeRepository repository;
+    RoleRepository repository;
+
     @Override
-    public List<National_ID_Type> findAll() {
+    public List<Role> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<National_ID_Type> findById(Long id) {
+    public Optional<Role> findById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public National_ID_Type save(National_ID_Type entity) throws Exception {
+    public Role save(Role entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
             return repository.save(entity);
         }else{
@@ -35,12 +36,17 @@ public class National_ID_TypeServiceImpl implements National_ID_TypeService{
     }
 
     @Override
-    public National_ID_Type update(National_ID_Type entity) throws Exception {
+    public Role update(Role entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
             return repository.save(entity);
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
+    }
+
+    @Override
+    public void validate(Role entity) throws Exception {
+
     }
 
     @Override
@@ -53,27 +59,18 @@ public class National_ID_TypeServiceImpl implements National_ID_TypeService{
     }
 
     @Override
-    public List<National_ID_Type> findByCode(String code) {
-        return repository.findByCode(code);
+    public Long count() {
+        return repository.count();
     }
 
     @Override
-    public List<National_ID_Type> findByName(String name) {
+    public List<Role> findByName(String name) {
         return repository.findByName(name);
     }
 
     @Override
-    public List<National_ID_Type> findByStatus(String status) {
+    public List<Role> findByStatus(String status) {
         return repository.findByStatus(status);
     }
 
-    @Override
-    public void validate(National_ID_Type entity) throws Exception {
-
-    }
-
-    @Override
-    public Long count() {
-        return repository.count();
-    }
 }

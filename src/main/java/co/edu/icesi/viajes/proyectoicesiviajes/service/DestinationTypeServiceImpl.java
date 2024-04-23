@@ -1,7 +1,7 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
-import co.edu.icesi.viajes.proyectoicesiviajes.domain.National_ID_Type;
-import co.edu.icesi.viajes.proyectoicesiviajes.repository.National_ID_TypeRepository;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationType;
+import co.edu.icesi.viajes.proyectoicesiviajes.repository.DestinationTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -11,22 +11,38 @@ import java.util.Optional;
 
 @Scope("singleton")
 @Service
-public class National_ID_TypeServiceImpl implements National_ID_TypeService{
+public class DestinationTypeServiceImpl implements DestinationTypeService{
 
     @Autowired
-    private National_ID_TypeRepository repository;
+    DestinationTypeRepository repository;
+
     @Override
-    public List<National_ID_Type> findAll() {
+    public List<DestinationType> findByCode(String code) {
+        return repository.findByCode(code);
+    }
+
+    @Override
+    public List<DestinationType> findByName(String name) {
+        return repository.findByName(name);
+    }
+
+    @Override
+    public List<DestinationType> findByStatus(String status) {
+        return repository.findByStatus(status);
+    }
+
+    @Override
+    public List<DestinationType> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<National_ID_Type> findById(Long id) {
+    public Optional<DestinationType> findById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public National_ID_Type save(National_ID_Type entity) throws Exception {
+    public DestinationType save(DestinationType entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
             return repository.save(entity);
         }else{
@@ -35,7 +51,7 @@ public class National_ID_TypeServiceImpl implements National_ID_TypeService{
     }
 
     @Override
-    public National_ID_Type update(National_ID_Type entity) throws Exception {
+    public DestinationType update(DestinationType entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
             return repository.save(entity);
         }else{
@@ -44,7 +60,7 @@ public class National_ID_TypeServiceImpl implements National_ID_TypeService{
     }
 
     @Override
-    public void deleteById(Long id) throws Exception{
+    public void deleteById(Long id) throws Exception {
         if(repository.findById(id).isPresent()){
             repository.deleteById(id);
         }else{
@@ -53,22 +69,7 @@ public class National_ID_TypeServiceImpl implements National_ID_TypeService{
     }
 
     @Override
-    public List<National_ID_Type> findByCode(String code) {
-        return repository.findByCode(code);
-    }
-
-    @Override
-    public List<National_ID_Type> findByName(String name) {
-        return repository.findByName(name);
-    }
-
-    @Override
-    public List<National_ID_Type> findByStatus(String status) {
-        return repository.findByStatus(status);
-    }
-
-    @Override
-    public void validate(National_ID_Type entity) throws Exception {
+    public void validate(DestinationType entity) throws Exception {
 
     }
 

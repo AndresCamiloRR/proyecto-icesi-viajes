@@ -13,8 +13,6 @@ public interface GenericService <T, ID>{
 
     public T update(T entity) throws Exception;
 
-    public void delete(T entity) throws Exception;
-
     public void deleteById(ID id) throws Exception;
 
     public void validate(T entity) throws Exception;

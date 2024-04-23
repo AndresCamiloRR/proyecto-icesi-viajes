@@ -1,7 +1,7 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
-import co.edu.icesi.viajes.proyectoicesiviajes.domain.National_ID_Type;
-import co.edu.icesi.viajes.proyectoicesiviajes.repository.National_ID_TypeRepository;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.Permission;
+import co.edu.icesi.viajes.proyectoicesiviajes.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -11,22 +11,23 @@ import java.util.Optional;
 
 @Scope("singleton")
 @Service
-public class National_ID_TypeServiceImpl implements National_ID_TypeService{
+public class PermissionServiceImpl implements PermissionService{
 
     @Autowired
-    private National_ID_TypeRepository repository;
+    PermissionRepository repository;
+
     @Override
-    public List<National_ID_Type> findAll() {
+    public List<Permission> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<National_ID_Type> findById(Long id) {
+    public Optional<Permission> findById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public National_ID_Type save(National_ID_Type entity) throws Exception {
+    public Permission save(Permission entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
             return repository.save(entity);
         }else{
@@ -35,12 +36,17 @@ public class National_ID_TypeServiceImpl implements National_ID_TypeService{
     }
 
     @Override
-    public National_ID_Type update(National_ID_Type entity) throws Exception {
+    public Permission update(Permission entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
             return repository.save(entity);
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
+    }
+
+    @Override
+    public void validate(Permission entity) throws Exception {
+
     }
 
     @Override
@@ -53,27 +59,17 @@ public class National_ID_TypeServiceImpl implements National_ID_TypeService{
     }
 
     @Override
-    public List<National_ID_Type> findByCode(String code) {
-        return repository.findByCode(code);
+    public Long count() {
+        return repository.count();
     }
 
     @Override
-    public List<National_ID_Type> findByName(String name) {
+    public List<Permission> findByName(String name) {
         return repository.findByName(name);
     }
 
     @Override
-    public List<National_ID_Type> findByStatus(String status) {
+    public List<Permission> findByStatus(String status) {
         return repository.findByStatus(status);
-    }
-
-    @Override
-    public void validate(National_ID_Type entity) throws Exception {
-
-    }
-
-    @Override
-    public Long count() {
-        return repository.count();
     }
 }
