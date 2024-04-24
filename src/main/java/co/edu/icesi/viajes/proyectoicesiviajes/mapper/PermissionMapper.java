@@ -12,4 +12,7 @@ public interface PermissionMapper {
     List<Permission> toPermission(List<PermissionDTO> permissionDTOList);
     List<PermissionDTO> toPermissionDTO(List<Permission> permissionList);
 
+    Permission toPermission(PermissionDTO permissionDTO);
+    PermissionDTO toPermissionDTO(Permission permission);
+
 }

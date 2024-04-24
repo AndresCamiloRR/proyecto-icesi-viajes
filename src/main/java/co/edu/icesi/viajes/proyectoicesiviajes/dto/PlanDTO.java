@@ -21,7 +21,6 @@ public class PlanDTO {
     private Date tripStartDate;
     private Date tripEndDate;
     private Integer totalCost;
-    private Long clientId;
-    private Long userId;
-    private Long planDetailId;
+    private Long client;
+    private Long user;
 }

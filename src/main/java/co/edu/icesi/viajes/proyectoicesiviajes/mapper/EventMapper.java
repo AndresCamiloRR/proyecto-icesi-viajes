@@ -18,4 +18,10 @@ public interface EventMapper {
     @Mapping(source = "idUser", target = "idUser.id")
     Event toEvent(EventDTO dto);
 
+    @Mapping(source = "idUser.id", target = "idUser")
+    List<EventDTO> toEventDTO(List<Event> entityList);
+
+    @Mapping(source = "idUser", target = "idUser.id")
+    List<Event> toEvent(List<EventDTO> dtoList);
+
 }

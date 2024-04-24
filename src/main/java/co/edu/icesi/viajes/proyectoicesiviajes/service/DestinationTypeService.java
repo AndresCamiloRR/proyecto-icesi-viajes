@@ -1,15 +1,16 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationType;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeDTO;
 
 import java.util.List;
 
-public interface DestinationTypeService extends GenericService<DestinationType, Long> {
+public interface DestinationTypeService extends GenericService<DestinationTypeDTO, Long> {
 
-    List<DestinationType> findByCode(String code);
+    List<DestinationTypeDTO> findByCode(String code);
 
-    List<DestinationType> findByName(String name);
+    List<DestinationTypeDTO> findByName(String name);
 
-    List<DestinationType> findByStatus(String status);
+    List<DestinationTypeDTO> findByStatus(String status);
 
 }

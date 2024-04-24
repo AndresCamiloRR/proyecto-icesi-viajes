@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Role_Permission;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.Role_PermissionDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.Role_PermissionMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.Role_PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,30 +18,40 @@ public class Role_PermissionServiceImpl implements Role_PermissionService{
     @Autowired
     Role_PermissionRepository repository;
 
+    @Autowired
+    Role_PermissionMapper mapper;
 
     @Override
-    public List<Role_Permission> findAll() {
-        return repository.findAll();
+    public List<Role_PermissionDTO> findAll() {
+        List<Role_Permission> list = repository.findAll();
+        return mapper.toRole_PermissionDTO(list);
     }
 
     @Override
-    public Optional<Role_Permission> findById(Long id) {
-        return repository.findById(id);
+    public Role_PermissionDTO findById(Long id) throws Exception{
+        try {
+            Role_Permission entity = repository.findById(id).get();
+            return mapper.toRole_PermissionDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public Role_Permission save(Role_Permission entity) throws Exception {
+    public Role_PermissionDTO save(Role_PermissionDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            Role_Permission role_permission = mapper.toRole_Permission(entity);
+            return mapper.toRole_PermissionDTO(repository.save(role_permission));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public Role_Permission update(Role_Permission entity) throws Exception {
+    public Role_PermissionDTO update(Role_PermissionDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            Role_Permission role_permission = mapper.toRole_Permission(entity);
+            return mapper.toRole_PermissionDTO(repository.save(role_permission));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
@@ -55,7 +67,7 @@ public class Role_PermissionServiceImpl implements Role_PermissionService{
     }
 
     @Override
-    public void validate(Role_Permission entity) throws Exception {
+    public void validate(Role_PermissionDTO entity) throws Exception {
 
     }
 
@@ -65,18 +77,21 @@ public class Role_PermissionServiceImpl implements Role_PermissionService{
     }
 
     @Override
-    public List<Role_Permission> findByRol_Id(Long roleId) {
-        return repository.findByRol_Id(roleId);
+    public List<Role_PermissionDTO> findByRol_Id(Long roleId) {
+        List<Role_Permission> list = repository.findByRol_Id(roleId);
+        return mapper.toRole_PermissionDTO(list);
     }
 
     @Override
-    public List<Role_Permission> findByPermission_Id(Long permissionId) {
-        return repository.findByPermission_Id(permissionId);
+    public List<Role_PermissionDTO> findByPermission_Id(Long permissionId) {
+        List<Role_Permission> list = repository.findByPermission_Id(permissionId);
+        return mapper.toRole_PermissionDTO(list);
     }
 
     @Override
-    public Role_Permission findByRol_IdAndPermission_Id(Long rol_id, Long permission_id) {
-        return repository.findByRol_IdAndPermission_Id(rol_id, permission_id);
+    public Role_PermissionDTO findByRol_IdAndPermission_Id(Long rol_id, Long permission_id) {
+        Role_Permission list = repository.findByRol_IdAndPermission_Id(rol_id, permission_id);
+        return mapper.toRole_PermissionDTO(list);
     }
 
     @Override

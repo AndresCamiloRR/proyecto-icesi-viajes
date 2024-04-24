@@ -2,20 +2,21 @@ package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Event;
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.User;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.EventDTO;
 
 import java.sql.Date;
 import java.util.List;
 
-public interface EventService extends GenericService<Event, Long>{
+public interface EventService extends GenericService<EventDTO, Long>{
 
-    List<Event> findByEntity(String entity);
+    List<EventDTO> findByEntity(String entity);
 
-    List<Event> findByType(String type);
+    List<EventDTO> findByType(String type);
 
-    List<Event> findByIdUser(User idUser);
+    List<EventDTO> findByIdUser(User idUser);
 
-    List<Event> findByIdEntity(String idEntity);
+    List<EventDTO> findByIdEntity(String idEntity);
 
-    List<Event> findByDate(Date date);
+    List<EventDTO> findByDate(Date date);
 
 }

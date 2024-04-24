@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.DestinationMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,60 +17,77 @@ public class DestinationServiceImpl implements DestinationService {
 
     @Autowired
     DestinationRepository repository;
+    
+    @Autowired
+    DestinationMapper mapper;
 
     @Override
-    public List<Destination> findByCode(String code) {
-        return repository.findByCode(code);
+    public List<DestinationDTO> findByCode(String code) {
+        List<Destination> list = repository.findByCode(code);
+        return mapper.toDestinationDTO(list);
     }
 
     @Override
-    public List<Destination> findByName(String name) {
-        return repository.findByName(name);
+    public List<DestinationDTO> findByName(String name) {
+        List<Destination> list = repository.findByName(name);
+        return mapper.toDestinationDTO(list);
     }
 
     @Override
-    public List<Destination> findByByLand(String byLand) {
-        return repository.findByByLand(byLand);
+    public List<DestinationDTO> findByByLand(String byLand) {
+        List<Destination> list = repository.findByByLand(byLand);
+        return mapper.toDestinationDTO(list);
     }
 
     @Override
-    public List<Destination> findByBySea(String bySea) {
-        return repository.findByBySea(bySea);
+    public List<DestinationDTO> findByBySea(String bySea) {
+        List<Destination> list = repository.findByBySea(bySea);
+        return mapper.toDestinationDTO(list);
     }
 
     @Override
-    public List<Destination> findByByAir(String byAir) {
-        return repository.findByByAir(byAir);
+    public List<DestinationDTO> findByByAir(String byAir) {
+        List<Destination> list = repository.findByByAir(byAir);
+        return mapper.toDestinationDTO(list);
     }
 
     @Override
-    public List<Destination> findByStatus(String status) {
-        return repository.findByStatus(status);
+    public List<DestinationDTO> findByStatus(String status) {
+        List<Destination> list = repository.findByStatus(status);
+        return mapper.toDestinationDTO(list);
     }
 
     @Override
-    public List<Destination> findAll() {
-        return repository.findAll();
+    public List<DestinationDTO> findAll() {
+        List<Destination> list = repository.findAll();
+        return mapper.toDestinationDTO(list);
     }
 
     @Override
-    public Optional<Destination> findById(Long id) {
-        return repository.findById(id);
+    public DestinationDTO findById(Long id) throws Exception{
+        try {
+            Destination entity = repository.findById(id).get();
+            return mapper.toDestinationDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public Destination save(Destination entity) throws Exception {
+    public DestinationDTO save(DestinationDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            Destination destination = mapper.toDestination(entity);
+            return mapper.toDestinationDTO(repository.save(destination));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public Destination update(Destination entity) throws Exception {
+    public DestinationDTO update(DestinationDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            Destination destination = mapper.toDestination(entity);
+            return mapper.toDestinationDTO(repository.save(destination));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
@@ -84,7 +103,7 @@ public class DestinationServiceImpl implements DestinationService {
     }
 
     @Override
-    public void validate(Destination entity) throws Exception {
+    public void validate(DestinationDTO entity) throws Exception {
 
     }
 

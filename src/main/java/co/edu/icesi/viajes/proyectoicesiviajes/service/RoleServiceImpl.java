@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Role;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.RoleDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.RoleMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,36 +18,47 @@ public class RoleServiceImpl implements RoleService{
     @Autowired
     RoleRepository repository;
 
+    @Autowired
+    RoleMapper mapper;
+
     @Override
-    public List<Role> findAll() {
-        return repository.findAll();
+    public List<RoleDTO> findAll() {
+        List<Role> list = repository.findAll();
+        return mapper.toRoleDTO(list);
     }
 
     @Override
-    public Optional<Role> findById(Long id) {
-        return repository.findById(id);
+    public RoleDTO findById(Long id) throws Exception{
+        try {
+            Role entity = repository.findById(id).get();
+            return mapper.toRoleDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public Role save(Role entity) throws Exception {
+    public RoleDTO save(RoleDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            Role role = mapper.toRole(entity);
+            return mapper.toRoleDTO(repository.save(role));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public Role update(Role entity) throws Exception {
+    public RoleDTO update(RoleDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            Role role = mapper.toRole(entity);
+            return mapper.toRoleDTO(repository.save(role));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
     }
 
     @Override
-    public void validate(Role entity) throws Exception {
+    public void validate(RoleDTO entity) throws Exception {
 
     }
 
@@ -64,13 +77,15 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public List<Role> findByName(String name) {
-        return repository.findByName(name);
+    public List<RoleDTO> findByName(String name) {
+        List<Role> list = repository.findByName(name);
+        return mapper.toRoleDTO(list);
     }
 
     @Override
-    public List<Role> findByStatus(String status) {
-        return repository.findByStatus(status);
+    public List<RoleDTO> findByStatus(String status) {
+        List<Role> list = repository.findByStatus(status);
+        return mapper.toRoleDTO(list);
     }
 
 }

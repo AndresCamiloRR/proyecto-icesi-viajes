@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Permission;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PermissionDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.PermissionMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,36 +18,47 @@ public class PermissionServiceImpl implements PermissionService{
     @Autowired
     PermissionRepository repository;
 
+    @Autowired
+    PermissionMapper mapper;
+
     @Override
-    public List<Permission> findAll() {
-        return repository.findAll();
+    public List<PermissionDTO> findAll() {
+        List<Permission> list = repository.findAll();
+        return mapper.toPermissionDTO(list);
     }
 
     @Override
-    public Optional<Permission> findById(Long id) {
-        return repository.findById(id);
+    public PermissionDTO findById(Long id) throws Exception{
+        try {
+            Permission entity = repository.findById(id).get();
+            return mapper.toPermissionDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public Permission save(Permission entity) throws Exception {
+    public PermissionDTO save(PermissionDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            Permission permission = mapper.toPermission(entity);
+            return mapper.toPermissionDTO(repository.save(permission));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public Permission update(Permission entity) throws Exception {
+    public PermissionDTO update(PermissionDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            Permission permission = mapper.toPermission(entity);
+            return mapper.toPermissionDTO(repository.save(permission));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
     }
 
     @Override
-    public void validate(Permission entity) throws Exception {
+    public void validate(PermissionDTO entity) throws Exception {
 
     }
 
@@ -64,12 +77,14 @@ public class PermissionServiceImpl implements PermissionService{
     }
 
     @Override
-    public List<Permission> findByName(String name) {
-        return repository.findByName(name);
+    public List<PermissionDTO> findByName(String name) {
+        List<Permission> list = repository.findByName(name);
+        return mapper.toPermissionDTO(list);
     }
 
     @Override
-    public List<Permission> findByStatus(String status) {
-        return repository.findByStatus(status);
+    public List<PermissionDTO> findByStatus(String status) {
+        List<Permission> list = repository.findByStatus(status);
+        return mapper.toPermissionDTO(list);
     }
 }

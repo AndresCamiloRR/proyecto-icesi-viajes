@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationType;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.DestinationTypeMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.DestinationTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,44 +18,58 @@ public class DestinationTypeServiceImpl implements DestinationTypeService{
     @Autowired
     DestinationTypeRepository repository;
 
+    @Autowired
+    DestinationTypeMapper mapper;
+
     @Override
-    public List<DestinationType> findByCode(String code) {
-        return repository.findByCode(code);
+    public List<DestinationTypeDTO> findByCode(String code) {
+        List<DestinationType> list = repository.findByCode(code);
+        return mapper.toDestinationTypeDTO(list);
     }
 
     @Override
-    public List<DestinationType> findByName(String name) {
-        return repository.findByName(name);
+    public List<DestinationTypeDTO> findByName(String name) {
+        List<DestinationType> list = repository.findByName(name);
+        return mapper.toDestinationTypeDTO(list);
     }
 
     @Override
-    public List<DestinationType> findByStatus(String status) {
-        return repository.findByStatus(status);
+    public List<DestinationTypeDTO> findByStatus(String status) {
+        List<DestinationType> list = repository.findByStatus(status);
+        return mapper.toDestinationTypeDTO(list);
     }
 
     @Override
-    public List<DestinationType> findAll() {
-        return repository.findAll();
+    public List<DestinationTypeDTO> findAll() {
+        List<DestinationType> list = repository.findAll();
+        return mapper.toDestinationTypeDTO(list);
     }
 
     @Override
-    public Optional<DestinationType> findById(Long id) {
-        return repository.findById(id);
+    public DestinationTypeDTO findById(Long id) throws Exception{
+        try {
+            DestinationType entity = repository.findById(id).get();
+            return mapper.toDestinationTypeDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public DestinationType save(DestinationType entity) throws Exception {
+    public DestinationTypeDTO save(DestinationTypeDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            DestinationType destinationType = mapper.toDestinationType(entity);
+            return mapper.toDestinationTypeDTO(repository.save(destinationType));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public DestinationType update(DestinationType entity) throws Exception {
+    public DestinationTypeDTO update(DestinationTypeDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            DestinationType destinationType = mapper.toDestinationType(entity);
+            return mapper.toDestinationTypeDTO(repository.save(destinationType));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
@@ -69,7 +85,7 @@ public class DestinationTypeServiceImpl implements DestinationTypeService{
     }
 
     @Override
-    public void validate(DestinationType entity) throws Exception {
+    public void validate(DestinationTypeDTO entity) throws Exception {
 
     }
 

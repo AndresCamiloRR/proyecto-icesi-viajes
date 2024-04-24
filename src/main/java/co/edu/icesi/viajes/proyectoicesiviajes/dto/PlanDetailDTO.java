@@ -19,7 +19,7 @@ public class PlanDetailDTO {
     private Integer cost;
     private Date modifyate;
     private String status;
-    private Long destinationId;
+    private Long destination;
     private Integer numberOfNights;
     private Integer numberOfDays;
 }
