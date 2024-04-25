@@ -14,9 +14,6 @@ public class UserRestController {
     @Autowired
     private UserService service;
 
-    @Autowired
-    private UserMapper mapper;
-
     @PostMapping(path = "/save")
     public String saveUser(@RequestBody UserDTO userDTO){
         try{
