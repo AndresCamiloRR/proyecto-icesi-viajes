@@ -19,4 +19,5 @@ public class ClientDTO {
     private String status;
     private Long typeNID;
     private Date birthDate;
+    private byte[] image;
 }

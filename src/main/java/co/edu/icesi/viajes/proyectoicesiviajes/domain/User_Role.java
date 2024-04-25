@@ -17,10 +17,10 @@ public class User_Role {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idRol")
+    @JoinColumn(name = "id_role")
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "id_user")
     private User user;
 }

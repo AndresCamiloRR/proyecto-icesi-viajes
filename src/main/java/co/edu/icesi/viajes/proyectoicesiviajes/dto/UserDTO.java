@@ -16,4 +16,5 @@ public class UserDTO {
     private String name;
     private String nationalID;
     private String status;
+    private byte[] image;
 }

@@ -1,6 +1,6 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
-import co.edu.icesi.viajes.proyectoicesiviajes.domain.National_ID_Type;
+
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.National_ID_TypeDTO;
 
 import java.util.List;

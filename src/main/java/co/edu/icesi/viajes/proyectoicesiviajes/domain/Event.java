@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.sql.Date;
 
 @Entity
-@Table(name = "events")
+@Table(name = "event")
 @ToString
 @Getter
 @Setter

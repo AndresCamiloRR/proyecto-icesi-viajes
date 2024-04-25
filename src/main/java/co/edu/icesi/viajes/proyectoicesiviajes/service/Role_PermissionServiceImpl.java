@@ -77,8 +77,8 @@ public class Role_PermissionServiceImpl implements Role_PermissionService{
     }
 
     @Override
-    public List<Role_PermissionDTO> findByRol_Id(Long roleId) {
-        List<Role_Permission> list = repository.findByRol_Id(roleId);
+    public List<Role_PermissionDTO> findByRole_Id(Long roleId) {
+        List<Role_Permission> list = repository.findByRole_Id(roleId);
         return mapper.toRole_PermissionDTO(list);
     }
 
@@ -89,14 +89,14 @@ public class Role_PermissionServiceImpl implements Role_PermissionService{
     }
 
     @Override
-    public Role_PermissionDTO findByRol_IdAndPermission_Id(Long rol_id, Long permission_id) {
-        Role_Permission list = repository.findByRol_IdAndPermission_Id(rol_id, permission_id);
+    public Role_PermissionDTO findByRole_IdAndPermission_Id(Long rol_id, Long permission_id) {
+        Role_Permission list = repository.findByRole_IdAndPermission_Id(rol_id, permission_id);
         return mapper.toRole_PermissionDTO(list);
     }
 
     @Override
-    public void deleteByRol_Id(Long roleId) {
-        repository.deleteByRol_Id(roleId);
+    public void deleteByRole_Id(Long roleId) {
+        repository.deleteByRole_Id(roleId);
     }
 
     @Override
