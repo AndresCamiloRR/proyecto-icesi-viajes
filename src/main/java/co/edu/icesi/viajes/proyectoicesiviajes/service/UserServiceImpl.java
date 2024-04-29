@@ -1,14 +1,20 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.User;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.CredentialsDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.UserDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.exceptions.AppException;
 import co.edu.icesi.viajes.proyectoicesiviajes.mapper.UserMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.CharBuffer;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Scope("singleton")
@@ -20,6 +26,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserMapper mapper;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> findAll() {
@@ -76,11 +85,6 @@ public class UserServiceImpl implements UserService{
         return repository.count();
     }
 
-    @Override
-    public List<UserDTO> findByLogin(String login) {
-        List<User> list = repository.findByLogin(login);
-        return mapper.toUserDTO(list);
-    }
 
     @Override
     public List<UserDTO> findByStatus(String status) {
@@ -98,5 +102,24 @@ public class UserServiceImpl implements UserService{
     public List<UserDTO> findByName(String name) {
         List<User> list = repository.findByName(name);
         return mapper.toUserDTO(list);
+    }
+
+    @Override
+    public UserDTO findByLogin(String login) {
+        User user = repository.findByLogin(login)
+                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+        return mapper.toUserDTO(user);
+    }
+
+    @Override
+    public UserDTO login(CredentialsDTO credentialsDto) {
+        User user = repository.findByLogin(credentialsDto.getLogin())
+                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+
+       // if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.getPassword()), user.getPassword())) {
+        if (Objects.equals(credentialsDto.getPassword(), user.getPassword())) {
+            return mapper.toUserDTO(user);
+        }
+        throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
 }
