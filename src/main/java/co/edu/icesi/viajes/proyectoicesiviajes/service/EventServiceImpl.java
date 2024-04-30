@@ -2,6 +2,8 @@ package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Event;
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.User;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.EventDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.EventMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,55 +20,71 @@ public class EventServiceImpl implements EventService{
     @Autowired
     EventRepository repository;
 
+    @Autowired
+    EventMapper mapper;
+
 
     @Override
-    public List<Event> findByEntity(String entity) {
-        return repository.findByEntity(entity);
+    public List<EventDTO> findByEntity(String entity) {
+        List<Event> list = repository.findByEntity(entity);
+        return mapper.toEventDTO(list);
     }
 
     @Override
-    public List<Event> findByType(String type) {
-        return repository.findByType(type);
+    public List<EventDTO> findByType(String type) {
+        List<Event> list = repository.findByType(type);
+        return mapper.toEventDTO(list);
     }
 
     @Override
-    public List<Event> findByIdUser(User idUser) {
-        return repository.findByIdUser(idUser);
+    public List<EventDTO> findByIdUser(User idUser) {
+        List<Event> list = repository.findByIdUser(idUser);
+        return mapper.toEventDTO(list);
     }
 
     @Override
-    public List<Event> findByIdEntity(String idEntity) {
-        return repository.findByIdEntity(idEntity);
+    public List<EventDTO> findByIdEntity(String idEntity) {
+        List<Event> list = repository.findByIdEntity(idEntity);
+        return mapper.toEventDTO(list);
     }
 
     @Override
-    public List<Event> findByDate(Date date) {
-        return repository.findByDate(date);
+    public List<EventDTO> findByDate(Date date) {
+        List<Event> list = repository.findByDate(date);
+        return mapper.toEventDTO(list);
     }
 
     @Override
-    public List<Event> findAll() {
-        return repository.findAll();
+    public List<EventDTO> findAll() {
+        List<Event> list = repository.findAll();
+        return mapper.toEventDTO(list);
     }
 
     @Override
-    public Optional<Event> findById(Long id) {
-        return repository.findById(id);
+    public EventDTO findById(Long id) throws Exception{
+        try {
+            Event entity = repository.findById(id).get();
+            return mapper.toEventDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public Event save(Event entity) throws Exception {
+    public EventDTO save(EventDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            Event event = mapper.toEvent(entity);
+            return mapper.toEventDTO(repository.save(event));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public Event update(Event entity) throws Exception {
+    public EventDTO update(EventDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            Event event = mapper.toEvent(entity);
+            return mapper.toEventDTO(repository.save(event));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
@@ -82,7 +100,7 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public void validate(Event entity) throws Exception {
+    public void validate(EventDTO entity) throws Exception {
 
     }
 

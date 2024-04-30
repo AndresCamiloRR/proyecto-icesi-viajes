@@ -1,34 +1,35 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Plan;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDTO;
 
 import java.util.Date;
 import java.util.List;
 
-public interface PlanService extends GenericService<Plan, Long> {
+public interface PlanService extends GenericService<PlanDTO, Long> {
 
-    List<Plan> findByCode(String code);
+    List<PlanDTO> findByCode(String code);
 
-    List<Plan> findByName(String name);
+    List<PlanDTO> findByName(String name);
 
-    List<Plan> findByStatus(String status);
+    List<PlanDTO> findByStatus(String status);
 
-    List<Plan> findByRequestDate(Date requestDate);
+    List<PlanDTO> findByRequestDate(Date requestDate);
 
-    List<Plan> findByTripStartDate(Date tripStartDate);
+    List<PlanDTO> findByTripStartDate(Date tripStartDate);
 
-    List<Plan> findByTripEndDate(Date tripEndDate);
+    List<PlanDTO> findByTripEndDate(Date tripEndDate);
 
-    List<Plan> findByTotalCost(Integer totalCost);
+    List<PlanDTO> findByTotalCost(Integer totalCost);
 
-    List<Plan> findByNumberOfPeople(Integer numberOfPeople);
+    List<PlanDTO> findByNumberOfPeople(Integer numberOfPeople);
 
-    List<Plan> findByClient_Id(Long clientId);
+    List<PlanDTO> findByClient_Id(Long clientId);
 
-    List<Plan> findByUser_Id(Long userId);
+    List<PlanDTO> findByUser_Id(Long userId);
 
-    List<Plan> findByTripStartDateBetween(Date startDate, Date endDate);
+    List<PlanDTO> findByTripStartDateBetween(Date startDate, Date endDate);
 
-    List<Plan> findByTripEndDateBetween(Date startDate, Date endDate);
+    List<PlanDTO> findByTripEndDateBetween(Date startDate, Date endDate);
 
 }

@@ -12,4 +12,7 @@ public interface RoleMapper {
     List<Role> toRole(List<RoleDTO> roleDTOList);
     List<RoleDTO> toRoleDTO(List<Role> roleList);
 
+    Role toRole(RoleDTO roleDTOList);
+    RoleDTO toRoleDTO(Role role);
+
 }

@@ -9,12 +9,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserDTO {
+public class PlanDetail_PlanDTO {
+
     private Long id;
-    private String login;
-    private String password;
-    private String name;
-    private String nationalID;
-    private String status;
-    private byte[] image;
+    private Long planDetail;
+    private Long plan;
+
 }

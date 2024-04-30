@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.PlanDetail;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.PlanDetailMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.PlanDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,30 +18,40 @@ public class PlanDetailServiceImpl implements PlanDetailService{
     @Autowired
     PlanDetailRepository repository;
 
+    @Autowired
+    PlanDetailMapper mapper;
 
     @Override
-    public List<PlanDetail> findAll() {
-        return repository.findAll();
+    public List<PlanDetailDTO> findAll() {
+        List<PlanDetail> list = repository.findAll();
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public Optional<PlanDetail> findById(Long id) {
-        return repository.findById(id);
+    public PlanDetailDTO findById(Long id) throws Exception{
+        try {
+            PlanDetail planDetail = repository.findById(id).get();
+            return mapper.toPlanDetailDTO(planDetail);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public PlanDetail save(PlanDetail entity) throws Exception {
+    public PlanDetailDTO save(PlanDetailDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            PlanDetail planDetail = mapper.toPlanDetail(entity);
+            return mapper.toPlanDetailDTO(repository.save(planDetail));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public PlanDetail update(PlanDetail entity) throws Exception {
+    public PlanDetailDTO update(PlanDetailDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            PlanDetail planDetail = mapper.toPlanDetail(entity);
+            return mapper.toPlanDetailDTO(repository.save(planDetail));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
@@ -55,7 +67,7 @@ public class PlanDetailServiceImpl implements PlanDetailService{
     }
 
     @Override
-    public void validate(PlanDetail entity) throws Exception {
+    public void validate(PlanDetailDTO entity) throws Exception {
 
     }
 
@@ -65,47 +77,56 @@ public class PlanDetailServiceImpl implements PlanDetailService{
     }
 
     @Override
-    public List<PlanDetail> findByFood(String food) {
-        return repository.findByFood(food);
+    public List<PlanDetailDTO> findByFood(String food) {
+        List<PlanDetail> list = repository.findByFood(food);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByLodging(String lodging) {
-        return repository.findByLodging(lodging);
+    public List<PlanDetailDTO> findByLodging(String lodging) {
+        List<PlanDetail> list = repository.findByLodging(lodging);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByTransport(String transport) {
-        return repository.findByTransport(transport);
+    public List<PlanDetailDTO> findByTransport(String transport) {
+        List<PlanDetail> list = repository.findByTransport(transport);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByTransfers(String transfers) {
-        return repository.findByTransfers(transfers);
+    public List<PlanDetailDTO> findByTransfers(String transfers) {
+        List<PlanDetail> list = repository.findByTransfers(transfers);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByCost(Integer cost) {
-        return repository.findByCost(cost);
+    public List<PlanDetailDTO> findByCost(Integer cost) {
+        List<PlanDetail> list = repository.findByCost(cost);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByStatus(String status) {
-        return repository.findByStatus(status);
+    public List<PlanDetailDTO> findByStatus(String status) {
+        List<PlanDetail> list = repository.findByStatus(status);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByDestination_Id(Long destinationId) {
-        return repository.findByDestination_Id(destinationId);
+    public List<PlanDetailDTO> findByDestination_Id(Long destinationId) {
+        List<PlanDetail> list = repository.findByDestination_Id(destinationId);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByNumberOfNights(Integer numberOfNights) {
-        return repository.findByNumberOfNights(numberOfNights);
+    public List<PlanDetailDTO> findByNumberOfNights(Integer numberOfNights) {
+        List<PlanDetail> list = repository.findByNumberOfNights(numberOfNights);
+        return mapper.toPlanDetailDTO(list);
     }
 
     @Override
-    public List<PlanDetail> findByNumberOfDays(Integer numberOfDays) {
-        return repository.findByNumberOfDays(numberOfDays);
+    public List<PlanDetailDTO> findByNumberOfDays(Integer numberOfDays) {
+        List<PlanDetail> list = repository.findByNumberOfDays(numberOfDays);
+        return mapper.toPlanDetailDTO(list);
     }
 }

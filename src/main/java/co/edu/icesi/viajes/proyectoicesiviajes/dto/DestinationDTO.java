@@ -18,4 +18,5 @@ public class DestinationDTO {
     private String bySea;
     private String byAir;
     private String status;
+    private byte[] image;
 }

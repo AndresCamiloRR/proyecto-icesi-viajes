@@ -9,12 +9,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserDTO {
+public class Destination_DestinationTypeDTO {
+
     private Long id;
-    private String login;
-    private String password;
-    private String name;
-    private String nationalID;
-    private String status;
-    private byte[] image;
+    private Long destinationType;
+    private Long destination;
+
 }

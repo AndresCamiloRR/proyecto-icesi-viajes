@@ -1,21 +1,22 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
 
 import java.util.List;
 
-public interface DestinationService extends GenericService<Destination, Long> {
+public interface DestinationService extends GenericService<DestinationDTO, Long> {
 
-    List<Destination> findByCode(String code);
+    List<DestinationDTO> findByCode(String code);
 
-    List<Destination> findByName(String name);
+    List<DestinationDTO> findByName(String name);
 
-    List<Destination> findByByLand(String byLand);
+    List<DestinationDTO> findByByLand(String byLand);
 
-    List<Destination> findByBySea(String bySea);
+    List<DestinationDTO> findByBySea(String bySea);
 
-    List<Destination> findByByAir(String byAir);
+    List<DestinationDTO> findByByAir(String byAir);
 
-    List<Destination> findByStatus(String status);
+    List<DestinationDTO> findByStatus(String status);
 
 }

@@ -46,4 +46,7 @@ public class Client {
 
     @Column(name = "birth_date")
     private Date birthDate;
+
+    @Column(name = "image")
+    private byte[] image;
 }

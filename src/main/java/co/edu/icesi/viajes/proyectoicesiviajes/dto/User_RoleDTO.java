@@ -9,12 +9,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserDTO {
+public class User_RoleDTO {
+
     private Long id;
-    private String login;
-    private String password;
-    private String name;
-    private String nationalID;
-    private String status;
-    private byte[] image;
+    private Long role;
+    private Long user;
 }

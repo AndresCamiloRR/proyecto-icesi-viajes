@@ -12,4 +12,7 @@ public interface DestinationMapper {
     List<Destination> toDestination(List<DestinationDTO> destinationDTOList);
     List<DestinationDTO> toDestinationDTO(List<Destination> destinationList);
 
+    Destination toDestination(DestinationDTO destinationDTO);
+    DestinationDTO toDestinationDTO(Destination destination);
+
 }

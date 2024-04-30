@@ -36,4 +36,7 @@ public class Destination {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "image")
+    private byte[] image;
 }

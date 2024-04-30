@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Plan;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.PlanMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.PlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -17,29 +19,40 @@ public class PlanServiceImpl implements PlanService{
     @Autowired
     PlanRepository repository;
 
+    @Autowired
+    PlanMapper mapper;
+
     @Override
-    public List<Plan> findAll() {
-        return repository.findAll();
+    public List<PlanDTO> findAll() {
+        List<Plan> list = repository.findAll();
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public Optional<Plan> findById(Long id) {
-        return repository.findById(id);
+    public PlanDTO findById(Long id) throws Exception{
+        try {
+            Plan entity = repository.findById(id).get();
+            return mapper.toPlanDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public Plan save(Plan entity) throws Exception {
+    public PlanDTO save(PlanDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            Plan plan = mapper.toPlan(entity);
+            return mapper.toPlanDTO(repository.save(plan));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public Plan update(Plan entity) throws Exception {
+    public PlanDTO update(PlanDTO entity) throws Exception {
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            Plan plan = mapper.toPlan(entity);
+            return mapper.toPlanDTO(repository.save(plan));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
@@ -55,7 +68,7 @@ public class PlanServiceImpl implements PlanService{
     }
 
     @Override
-    public void validate(Plan entity) throws Exception {
+    public void validate(PlanDTO entity) throws Exception {
 
     }
 
@@ -65,62 +78,74 @@ public class PlanServiceImpl implements PlanService{
     }
 
     @Override
-    public List<Plan> findByCode(String code) {
-        return repository.findByCode(code);
+    public List<PlanDTO> findByCode(String code) {
+        List<Plan> list = repository.findByCode(code);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByName(String name) {
-        return repository.findByName(name);
+    public List<PlanDTO> findByName(String name) {
+        List<Plan> list = repository.findByName(name);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByStatus(String status) {
-        return repository.findByStatus(status);
+    public List<PlanDTO> findByStatus(String status) {
+        List<Plan> list = repository.findByStatus(status);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByRequestDate(Date requestDate) {
-        return repository.findByRequestDate(requestDate);
+    public List<PlanDTO> findByRequestDate(Date requestDate) {
+        List<Plan> list = repository.findByRequestDate(requestDate);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByTripStartDate(Date tripStartDate) {
-        return repository.findByTripStartDate(tripStartDate);
+    public List<PlanDTO> findByTripStartDate(Date tripStartDate) {
+        List<Plan> list = repository.findByTripStartDate(tripStartDate);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByTripEndDate(Date tripEndDate) {
-        return repository.findByTripEndDate(tripEndDate);
+    public List<PlanDTO> findByTripEndDate(Date tripEndDate) {
+        List<Plan> list = repository.findByTripEndDate(tripEndDate);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByTotalCost(Integer totalCost) {
-        return repository.findByTotalCost(totalCost);
+    public List<PlanDTO> findByTotalCost(Integer totalCost) {
+        List<Plan> list = repository.findByTotalCost(totalCost);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByNumberOfPeople(Integer numberOfPeople) {
-        return repository.findByNumberOfPeople(numberOfPeople);
+    public List<PlanDTO> findByNumberOfPeople(Integer numberOfPeople) {
+        List<Plan> list = repository.findByNumberOfPeople(numberOfPeople);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByClient_Id(Long clientId) {
-        return repository.findByClient_Id(clientId);
+    public List<PlanDTO> findByClient_Id(Long clientId) {
+        List<Plan> list = repository.findByClient_Id(clientId);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByUser_Id(Long userId) {
-        return repository.findByUser_Id(userId);
+    public List<PlanDTO> findByUser_Id(Long userId) {
+        List<Plan> list = repository.findByUser_Id(userId);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByTripStartDateBetween(Date startDate, Date endDate) {
-        return repository.findByTripStartDateBetween(startDate, endDate);
+    public List<PlanDTO> findByTripStartDateBetween(Date startDate, Date endDate) {
+        List<Plan> list = repository.findByTripStartDateBetween(startDate, endDate);
+        return mapper.toPlanDTO(list);
     }
 
     @Override
-    public List<Plan> findByTripEndDateBetween(Date startDate, Date endDate) {
-        return repository.findByTripEndDateBetween(startDate, endDate);
+    public List<PlanDTO> findByTripEndDateBetween(Date startDate, Date endDate) {
+        List<Plan> list = repository.findByTripEndDateBetween(startDate, endDate);
+        return mapper.toPlanDTO(list);
     }
 }

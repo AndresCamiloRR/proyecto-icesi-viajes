@@ -1,6 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination_DestinationType;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.Destination_DestinationTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.Destination_DestinationTypeMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.Destination_DestinationTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,44 +18,58 @@ public class Destination_DestinationTypeServiceImpl implements Destination_Desti
     @Autowired
     Destination_DestinationTypeRepository repository;
 
+    @Autowired
+    Destination_DestinationTypeMapper mapper;
+
     @Override
-    public List<Destination_DestinationType> findByDestinationType_Id(Long destinationTypeId) {
-        return repository.findByDestinationType_Id(destinationTypeId);
+    public List<Destination_DestinationTypeDTO> findByDestinationType_Id(Long destinationTypeId) {
+        List<Destination_DestinationType> list = repository.findByDestinationType_Id(destinationTypeId);
+        return mapper.toDestination_DestinationTypeDTO(list);
     }
 
     @Override
-    public List<Destination_DestinationType> findByDestination_Id(Long destinationId) {
-        return repository.findByDestinationType_Id(destinationId);
+    public List<Destination_DestinationTypeDTO> findByDestination_Id(Long destinationId) {
+        List<Destination_DestinationType> list = repository.findByDestinationType_Id(destinationId);
+        return mapper.toDestination_DestinationTypeDTO(list);
     }
 
     @Override
-    public Destination_DestinationType findByDestinationType_IdAndDestination_Id(Long destinationType_id, Long destination_id) {
-        return repository.findByDestinationType_IdAndDestination_Id(destinationType_id, destination_id);
+    public Destination_DestinationTypeDTO findByDestinationType_IdAndDestination_Id(Long destinationType_id, Long destination_id) {
+        Destination_DestinationType entity = repository.findByDestinationType_IdAndDestination_Id(destinationType_id, destination_id);
+        return mapper.toDestination_DestinationTypeDTO(entity);
     }
 
     @Override
-    public List<Destination_DestinationType> findAll() {
-        return repository.findAll();
+    public List<Destination_DestinationTypeDTO> findAll() {
+        List<Destination_DestinationType> list = repository.findAll();
+        return mapper.toDestination_DestinationTypeDTO(list);
     }
 
     @Override
-    public Optional<Destination_DestinationType> findById(Long id) {
-        return repository.findById(id);
+    public Destination_DestinationTypeDTO findById(Long id) throws Exception{
+        try {
+            Destination_DestinationType entity = repository.findById(id).get();
+            return mapper.toDestination_DestinationTypeDTO(entity);
+        }catch (Exception e){
+            throw new Exception("La entidad no fue encontrada");
+        }
     }
 
     @Override
-    public Destination_DestinationType save(Destination_DestinationType entity) throws Exception {
+    public Destination_DestinationTypeDTO save(Destination_DestinationTypeDTO entity) throws Exception {
+        Destination_DestinationType relation = mapper.toDestination_DestinationType(entity);
         if(repository.findById(entity.getId()).isEmpty()){
-            return repository.save(entity);
+            return mapper.toDestination_DestinationTypeDTO(repository.save(relation));
         }else{
             throw new Exception("La entidad ya existe en el sistema");
         }
     }
 
     @Override
-    public Destination_DestinationType update(Destination_DestinationType entity) throws Exception {
+    public Destination_DestinationTypeDTO update(Destination_DestinationTypeDTO entity) throws Exception {
+        Destination_DestinationType relation = mapper.toDestination_DestinationType(entity);
         if(repository.findById(entity.getId()).isPresent()){
-            return repository.save(entity);
+            return mapper.toDestination_DestinationTypeDTO(repository.save(relation));
         }else{
             throw new Exception("La entidad no existe en el sistema");
         }
@@ -79,7 +95,7 @@ public class Destination_DestinationTypeServiceImpl implements Destination_Desti
     }
 
     @Override
-    public void validate(Destination_DestinationType entity) throws Exception {
+    public void validate(Destination_DestinationTypeDTO entity) throws Exception {
 
     }
 
