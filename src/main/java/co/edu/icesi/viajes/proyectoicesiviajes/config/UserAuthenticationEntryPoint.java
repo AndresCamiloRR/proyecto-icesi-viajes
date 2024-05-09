@@ -19,10 +19,10 @@ public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Override
-    public void commence(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            AuthenticationException authException) throws IOException, ServletException{
+    public void commence(HttpServletRequest request,HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException{
+
+        System.out.println(request);
+
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         OBJECT_MAPPER.writeValue(response.getOutputStream(), new ErrorDTO("Unauthorized path"));

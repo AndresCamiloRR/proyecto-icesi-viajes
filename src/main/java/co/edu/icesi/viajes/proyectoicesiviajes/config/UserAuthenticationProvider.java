@@ -52,9 +52,9 @@ public class UserAuthenticationProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        System.out.println( "hola" + decoded.getIssuer());
+        System.out.println(decoded.getSubject());
 
-        UserDTO user = userService.findByLogin(decoded.getIssuer());
+        UserDTO user = userService.findByLogin(decoded.getSubject());
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }
