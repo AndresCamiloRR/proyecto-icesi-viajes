@@ -9,6 +9,7 @@ import co.edu.icesi.viajes.proyectoicesiviajes.service.ClientService;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ClientRestController {
     private ClientService service;
 
     @GetMapping(path = "/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<ClientDTO> getAll() {
         return service.findAll();
     }

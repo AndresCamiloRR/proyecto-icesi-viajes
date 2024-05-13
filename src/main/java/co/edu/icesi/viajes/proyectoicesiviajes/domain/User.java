@@ -1,5 +1,6 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.domain;
 
+import co.edu.icesi.viajes.proyectoicesiviajes.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,4 +34,8 @@ public class User {
 
     @Column(name = "image")
     private byte[] image;
+
+    @Enumerated (EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 }

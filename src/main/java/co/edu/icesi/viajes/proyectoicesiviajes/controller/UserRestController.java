@@ -7,6 +7,7 @@ import co.edu.icesi.viajes.proyectoicesiviajes.mapper.UserMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,7 +34,7 @@ public class UserRestController {
     public ResponseEntity<UserDTO> login(@RequestBody CredentialsDTO credentialsDto) {
         System.out.println(credentialsDto);
         UserDTO userDto = service.login(credentialsDto);
-        userDto.setToken(userAuthenticationProvider.createToken(userDto.getLogin()));
+        userDto.setToken(userAuthenticationProvider.createToken(userDto));
         return ResponseEntity.ok(userDto);
     }
 

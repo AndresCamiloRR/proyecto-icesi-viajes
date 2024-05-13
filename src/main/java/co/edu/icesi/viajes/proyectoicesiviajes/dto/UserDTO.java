@@ -1,5 +1,6 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.dto;
 
+import co.edu.icesi.viajes.proyectoicesiviajes.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,4 +19,5 @@ public class UserDTO {
     private String status;
     private byte[] image;
     private String token;
+    private Role role;
 }
