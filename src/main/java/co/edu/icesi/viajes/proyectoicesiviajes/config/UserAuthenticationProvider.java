@@ -58,7 +58,7 @@ public class UserAuthenticationProvider {
 
         UserDTO user = userService.findByLogin(decoded.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(user.getRole()));
+        return new UsernamePasswordAuthenticationToken(user, null, Collections.singletonList(user.getRole()));
     }
 
 }

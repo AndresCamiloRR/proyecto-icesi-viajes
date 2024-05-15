@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -26,5 +28,15 @@ public class ClientRestController {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<ClientDTO> getAll() {
         return service.findAll();
+    }
+
+    @PostMapping(path = "/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ClientDTO createClient(@RequestBody ClientDTO client) throws Exception {
+        System.out.println(client);
+        System.out.println("entro");
+        //long randomPositiveLong = Math.abs(UUID.randomUUID().getLeastSignificantBits());
+        //ClientDTO client = new ClientDTO(randomPositiveLong, id, firstName,lastName,firstName + " " + lastName, phone , sex, "Active", Long.parseLong(idType), dateOfBirth, null);
+        return service.save(client);
     }
 }

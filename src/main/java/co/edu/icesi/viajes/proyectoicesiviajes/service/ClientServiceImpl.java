@@ -71,6 +71,8 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public ClientDTO save(ClientDTO entity) throws Exception {
         Client client = mapper.toClient(entity);
+
+        System.out.println(client);
         if(repository.findById(entity.getId()).isEmpty()){
             return mapper.toClientDTO(repository.save(client));
         }else{
