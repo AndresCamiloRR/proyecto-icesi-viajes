@@ -27,7 +27,7 @@ public class ClientRestController {
     @GetMapping(path = "/all")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<ClientDTO> getAll() {
-        return service.findAll();
+        return service.findByStatus("Active");
     }
 
     @PostMapping(path = "/create")
@@ -38,5 +38,13 @@ public class ClientRestController {
         //long randomPositiveLong = Math.abs(UUID.randomUUID().getLeastSignificantBits());
         //ClientDTO client = new ClientDTO(randomPositiveLong, id, firstName,lastName,firstName + " " + lastName, phone , sex, "Active", Long.parseLong(idType), dateOfBirth, null);
         return service.save(client);
+    }
+
+    @PostMapping(path = "/delete")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public void deleteClient(@RequestBody Long id) throws Exception {
+        System.out.println("entro");
+        System.out.println(id);
+        service.deleteById(id);
     }
 }
