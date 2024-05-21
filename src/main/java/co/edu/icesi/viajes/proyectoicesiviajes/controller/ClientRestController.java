@@ -47,4 +47,14 @@ public class ClientRestController {
         System.out.println(id);
         service.deleteById(id);
     }
+
+    @PostMapping(path = "/update")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ClientDTO updateClient(@RequestBody ClientDTO client) throws Exception {
+        System.out.println(client);
+        System.out.println("entro");
+        //long randomPositiveLong = Math.abs(UUID.randomUUID().getLeastSignificantBits());
+        //ClientDTO client = new ClientDTO(randomPositiveLong, id, firstName,lastName,firstName + " " + lastName, phone , sex, "Active", Long.parseLong(idType), dateOfBirth, null);
+        return service.update(client);
+    }
 }

@@ -37,6 +37,13 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public List<ClientDTO> findByStatus(String status) {
         List<Client> list = repository.findByStatus(status);
+
+
+
+        List<ClientDTO> list2 = mapper.toClientDTO(list);
+
+        System.out.println(list2);
+
         return mapper.toClientDTO(list);
     }
 
