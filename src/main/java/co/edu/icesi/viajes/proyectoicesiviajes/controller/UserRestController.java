@@ -1,6 +1,7 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.controller;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.config.UserAuthenticationProvider;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.ClientDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.CredentialsDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.UserDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.mapper.UserMapper;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -36,6 +39,29 @@ public class UserRestController {
         UserDTO userDto = service.login(credentialsDto);
         userDto.setToken(userAuthenticationProvider.createToken(userDto));
         return ResponseEntity.ok(userDto);
+    }
+
+    @GetMapping(path = "/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<UserDTO> getAll() {
+        System.out.println( service.findByStatus("Active"));
+        return service.findByStatus("Active");
+    }
+
+    @PostMapping(path = "/delete")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public void deleteClient(@RequestBody Long id) throws Exception {
+        System.out.println("entro");
+        System.out.println(id);
+        service.deleteById(id);
+    }
+
+    @PostMapping(path = "/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public UserDTO createUser(@RequestBody UserDTO user) throws Exception {
+        System.out.println(user);
+        System.out.println("entro");
+        return service.save(user);
     }
 
 }
