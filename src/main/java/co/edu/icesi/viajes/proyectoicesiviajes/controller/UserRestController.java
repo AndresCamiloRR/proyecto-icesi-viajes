@@ -64,4 +64,11 @@ public class UserRestController {
         return service.save(user);
     }
 
+    @PostMapping(path = "/update")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public UserDTO updateUser(@RequestBody UserDTO user) throws Exception {
+        System.out.println("UPDATE");
+        return service.update(user);
+    }
+
 }
