@@ -1,6 +1,7 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +11,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
+@Data
 public class Destination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +26,9 @@ public class Destination {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "price")
+    private Double price;
 
     @Column(name = "by_land")
     private String byLand;

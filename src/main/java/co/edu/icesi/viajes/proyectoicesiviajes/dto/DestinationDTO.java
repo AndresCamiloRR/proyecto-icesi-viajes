@@ -1,22 +1,24 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
+@Data
 public class DestinationDTO {
     private Long id;
     private String code;
     private String name;
     private String description;
+    private Double price;
     private String byLand;
     private String bySea;
     private String byAir;
     private String status;
     private byte[] image;
+    private ArrayList<String> selectedTypes ;
 }
