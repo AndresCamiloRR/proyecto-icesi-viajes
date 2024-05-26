@@ -85,6 +85,7 @@ public class DestinationServiceImpl implements DestinationService {
 
     @Override
     public DestinationDTO update(DestinationDTO entity) throws Exception {
+
         if(repository.findById(entity.getId()).isPresent()){
             Destination destination = mapper.toDestination(entity);
             return mapper.toDestinationDTO(repository.save(destination));

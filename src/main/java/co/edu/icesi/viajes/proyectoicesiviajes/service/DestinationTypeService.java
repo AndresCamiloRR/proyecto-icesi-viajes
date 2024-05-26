@@ -9,7 +9,7 @@ public interface DestinationTypeService extends GenericService<DestinationTypeDT
 
     List<DestinationTypeDTO> findByCode(String code);
 
-    List<DestinationTypeDTO> findByName(String name);
+    DestinationTypeDTO findByName(String name);
 
     List<DestinationTypeDTO> findByStatus(String status);
 

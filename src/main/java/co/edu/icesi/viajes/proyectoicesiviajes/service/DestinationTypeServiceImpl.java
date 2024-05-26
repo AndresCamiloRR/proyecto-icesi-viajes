@@ -28,9 +28,9 @@ public class DestinationTypeServiceImpl implements DestinationTypeService{
     }
 
     @Override
-    public List<DestinationTypeDTO> findByName(String name) {
+    public DestinationTypeDTO findByName(String name) {
         List<DestinationType> list = repository.findByName(name);
-        return mapper.toDestinationTypeDTO(list);
+        return mapper.toDestinationTypeDTO(list.get(0));
     }
 
     @Override

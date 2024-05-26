@@ -1,12 +1,10 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.controller;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.config.UserAuthenticationProvider;
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.CredentialsDTO;
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeDTO;
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.UserDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.*;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.DestinationService;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.DestinationTypeService;
+import co.edu.icesi.viajes.proyectoicesiviajes.service.Destination_DestinationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -27,7 +26,7 @@ public class DestinationRestController {
     private DestinationTypeService serviceType;
 
     @Autowired
-    private UserAuthenticationProvider userAuthenticationProvider;
+    private Destination_DestinationTypeService serviceTypeRelation;
 
     @PostMapping(path = "/save")
     public String saveDestination(@RequestBody DestinationDTO userDTO){
@@ -61,17 +60,33 @@ public class DestinationRestController {
 
     @PostMapping(path = "/create")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public DestinationDTO createDestination(@RequestBody DestinationDTO user) throws Exception {
-        System.out.println(user);
+    public DestinationDTO createDestination(@RequestBody DestinationDTO destination) throws Exception {
+        System.out.println(destination);
+
+        ArrayList<String> tagsList = destination.getSelectedTypes();
+
+        DestinationDTO newDestination = service.save(destination);
+
+        tagsList.forEach(typeName-> {
+
+            DestinationTypeDTO type= serviceType.findByName(typeName);
+
+            try {
+                long randomPositiveLong = Math.abs(UUID.randomUUID().getLeastSignificantBits());
+                serviceTypeRelation.save(new Destination_DestinationTypeDTO(randomPositiveLong,type.getId(),newDestination.getId()));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         System.out.println("entro");
-        return service.save(user);
+        return newDestination;
     }
 
     @PostMapping(path = "/update")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public DestinationDTO updateDestination(@RequestBody DestinationDTO user) throws Exception {
+    public DestinationDTO updateDestination(@RequestBody DestinationDTO destination) throws Exception {
         System.out.println("UPDATE");
-        return service.update(user);
+        return service.update(destination);
     }
 }
 
