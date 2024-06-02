@@ -1,7 +1,10 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
-import co.edu.icesi.viajes.proyectoicesiviajes.domain.Plan;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationChartTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDTO;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
@@ -31,5 +34,19 @@ public interface PlanService extends GenericService<PlanDTO, Long> {
     List<PlanDTO> findByTripStartDateBetween(Date startDate, Date endDate);
 
     List<PlanDTO> findByTripEndDateBetween(Date startDate, Date endDate);
+
+    @Query("select count(*) from Plan")
+    Integer findThisWeekDetails();
+
+    @Query("SELECT COUNT(DISTINCT p.client) FROM Plan p")
+    Integer getClientsNum();
+
+    @Query("SELECT SUM(p.totalCost) FROM Plan p")
+    Double getMoney();
+
+    List<DestinationChartTypeDTO> getTopTypes();
+
+    List<DestinationTopDTO> getTopDestinations();
+
 
 }

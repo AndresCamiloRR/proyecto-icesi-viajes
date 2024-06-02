@@ -1,9 +1,8 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.controller;
 
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.ClientDTO;
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDTO;
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailDTO;
-import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetail_PlanDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationChartTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.*;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.PlanDetailService;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.PlanDetail_PlanService;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.PlanService;
@@ -53,5 +52,40 @@ public class PlanRestController {
     public PlanDetail_PlanDTO createPlanDetails(@RequestBody PlanDetail_PlanDTO detail) throws Exception {
         System.out.println(detail);
         return servicePlanDetail.save(detail);
+    }
+
+    @GetMapping(path = "/salesweek")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Integer getSales() throws Exception {
+        System.out.println("in");
+        return service.findThisWeekDetails();
+    }
+
+    @GetMapping(path = "/clientsnum")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Integer getClientsNum() throws Exception {
+        System.out.println("in");
+        return service.getClientsNum();
+    }
+
+    @GetMapping(path = "/money")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Double getMoney() throws Exception {
+        System.out.println("in");
+        return service.getMoney();
+    }
+
+    @GetMapping(path = "/topTypes")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<DestinationChartTypeDTO> getTopTypes() throws Exception {
+        System.out.println("in");
+        return service.getTopTypes();
+    }
+
+    @GetMapping(path = "/topDestinations")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<DestinationTopDTO> getTopDestinations() throws Exception {
+        System.out.println("in");
+        return service.getTopDestinations();
     }
 }

@@ -2,6 +2,7 @@ package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.PlanDetail;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailDTO;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
@@ -25,5 +26,4 @@ public interface PlanDetailService extends GenericService<PlanDetailDTO, Long> {
     List<PlanDetailDTO> findByNumberOfNights(Integer numberOfNights);
 
     List<PlanDetailDTO> findByNumberOfDays(Integer numberOfDays);
-
 }
