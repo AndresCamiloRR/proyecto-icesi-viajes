@@ -30,6 +30,12 @@ public class ClientRestController {
         return service.findByStatus("Active");
     }
 
+    @PostMapping(path = "/get")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ClientDTO getClient(@RequestBody Long id) throws Exception {
+        return service.findById(id);
+    }
+
     @PostMapping(path = "/create")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ClientDTO createClient(@RequestBody ClientDTO client) throws Exception {

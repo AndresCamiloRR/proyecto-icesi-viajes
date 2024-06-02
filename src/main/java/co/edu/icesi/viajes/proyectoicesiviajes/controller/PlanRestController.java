@@ -54,4 +54,13 @@ public class PlanRestController {
         System.out.println(detail);
         return servicePlanDetail.save(detail);
     }
+
+    @PostMapping(path = "/deletePlan")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public void deletePlan(@RequestBody Long id) throws Exception {
+        
+
+        service.deleteById(id);
+
+    }
 }
