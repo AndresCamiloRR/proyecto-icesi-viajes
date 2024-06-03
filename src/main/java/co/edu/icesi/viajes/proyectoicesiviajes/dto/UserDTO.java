@@ -17,7 +17,7 @@ public class UserDTO {
     private String name;
     private String nationalID;
     private String status;
-    private byte[] image;
+    private String image;
     private String token;
     private Role role;
 }

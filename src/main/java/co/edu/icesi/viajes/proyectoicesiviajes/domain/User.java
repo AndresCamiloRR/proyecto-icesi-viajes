@@ -33,7 +33,7 @@ public class User {
     private String status;
 
     @Column(name = "image")
-    private byte[] image;
+    private String image;
 
     @Enumerated (EnumType.STRING)
     @Column(name = "role")

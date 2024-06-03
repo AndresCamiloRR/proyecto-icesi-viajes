@@ -15,7 +15,7 @@ public class DestinationTopDTO {
 
     private String description;
 
-    private byte[] image;
+    private String image;
 
 }
 

@@ -43,5 +43,5 @@ public class Destination {
     private String status;
 
     @Column(name = "image")
-    private byte[] image;
+    private String image;
 }

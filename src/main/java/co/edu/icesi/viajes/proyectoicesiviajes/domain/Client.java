@@ -48,5 +48,5 @@ public class Client {
     private Date birthDate;
 
     @Column(name = "image")
-    private byte[] image;
+    private String image;
 }
