@@ -63,4 +63,39 @@ public class PlanRestController {
         service.deleteById(id);
 
     }
+
+    @GetMapping(path = "/salesweek")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Integer getSales() throws Exception {
+        System.out.println("in");
+        return service.findThisWeekDetails();
+    }
+
+    @GetMapping(path = "/clientsnum")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Integer getClientsNum() throws Exception {
+        System.out.println("in");
+        return service.getClientsNum();
+    }
+
+    @GetMapping(path = "/money")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public Double getMoney() throws Exception {
+        System.out.println("in");
+        return service.getMoney();
+    }
+
+    @GetMapping(path = "/topTypes")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<DestinationChartTypeDTO> getTopTypes() throws Exception {
+        System.out.println("in");
+        return service.getTopTypes();
+    }
+
+    @GetMapping(path = "/topDestinations")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<DestinationTopDTO> getTopDestinations() throws Exception {
+        System.out.println("in");
+        return service.getTopDestinations();
+    }
 }

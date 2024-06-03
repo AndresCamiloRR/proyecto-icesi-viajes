@@ -1,7 +1,12 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination;
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Plan;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationChartTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.DestinationMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.mapper.PlanMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.PlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Scope("singleton")
 @Service
@@ -21,6 +25,9 @@ public class PlanServiceImpl implements PlanService{
 
     @Autowired
     PlanMapper mapper;
+
+    @Autowired
+    DestinationMapper desMapper;
 
     @Override
     public List<PlanDTO> findAll() {
@@ -147,5 +154,30 @@ public class PlanServiceImpl implements PlanService{
     public List<PlanDTO> findByTripEndDateBetween(Date startDate, Date endDate) {
         List<Plan> list = repository.findByTripEndDateBetween(startDate, endDate);
         return mapper.toPlanDTO(list);
+    }
+
+    @Override
+    public Integer findThisWeekDetails() {
+        return repository.findThisWeekDetails();
+    }
+
+    @Override
+    public Integer getClientsNum() {
+        return repository.getClientsNum();
+    }
+
+    @Override
+    public Double getMoney() {
+        return repository.getMoney();
+    }
+
+    @Override
+    public List<DestinationChartTypeDTO> getTopTypes(){
+        return repository.getTopTypes();
+    }
+
+    @Override
+    public List<DestinationTopDTO> getTopDestinations() {
+        return repository.getTopDestinations();
     }
 }
