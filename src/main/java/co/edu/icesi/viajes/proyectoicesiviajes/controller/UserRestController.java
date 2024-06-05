@@ -25,6 +25,7 @@ public class UserRestController {
     private UserAuthenticationProvider userAuthenticationProvider;
 
     @PostMapping(path = "/save")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String saveUser(@RequestBody UserDTO userDTO){
         try{
             return service.save(userDTO).getName();
@@ -42,7 +43,7 @@ public class UserRestController {
     }
 
     @GetMapping(path = "/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<UserDTO> getAll() {
         System.out.println( service.findByStatus("Active"));
         return service.findByStatus("Active");

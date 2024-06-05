@@ -29,6 +29,7 @@ public class DestinationRestController {
     private Destination_DestinationTypeService serviceTypeRelation;
 
     @PostMapping(path = "/save")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public String saveDestination(@RequestBody DestinationDTO userDTO){
         try{
             return service.save(userDTO).getName();
@@ -38,20 +39,20 @@ public class DestinationRestController {
     }
 
     @GetMapping(path = "/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<DestinationDTO> getAll() {
         System.out.println( service.findByStatus("Active"));
         return service.findByStatus("Active");
     }
 
     @GetMapping(path = "/types")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<DestinationTypeDTO> getTypes() {
         return serviceType.findAll();
     }
 
     @PostMapping(path = "/delete")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public void deleteDestination(@RequestBody Long id) throws Exception {
         System.out.println("entro");
         System.out.println(id);
@@ -59,7 +60,7 @@ public class DestinationRestController {
     }
 
     @PostMapping(path = "/create")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public DestinationDTO createDestination(@RequestBody DestinationDTO destination) throws Exception {
         System.out.println(destination);
 
@@ -83,7 +84,7 @@ public class DestinationRestController {
     }
 
     @PostMapping(path = "/update")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public DestinationDTO updateDestination(@RequestBody DestinationDTO destination) throws Exception {
         System.out.println("UPDATE");
         return service.update(destination);

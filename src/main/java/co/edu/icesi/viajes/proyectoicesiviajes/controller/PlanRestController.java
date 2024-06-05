@@ -32,34 +32,34 @@ public class PlanRestController {
     private PlanDetail_PlanService servicePlanDetail;
 
     @GetMapping(path = "/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<PlanDTO> getAll() {
         return service.findByStatus("Active");
     }
 
     @PostMapping(path = "/create")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public PlanDTO createPlan(@RequestBody PlanDTO plan) throws Exception {
         System.out.println(plan);
         return service.save(plan);
     }
 
     @PostMapping(path = "/createdatails")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public PlanDetailDTO createDetails(@RequestBody PlanDetailDTO detail) throws Exception {
         System.out.println(detail);
         return serviceDetail.save(detail);
     }
 
     @PostMapping(path = "/createplandatails")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public PlanDetail_PlanDTO createPlanDetails(@RequestBody PlanDetail_PlanDTO detail) throws Exception {
         System.out.println(detail);
         return servicePlanDetail.save(detail);
     }
 
     @PostMapping(path = "/deletePlan")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public void deletePlan(@RequestBody Long id) throws Exception {
         
 
@@ -68,35 +68,35 @@ public class PlanRestController {
     }
 
     @GetMapping(path = "/salesweek")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public Integer getSales() throws Exception {
         System.out.println("in");
         return service.findThisWeekDetails();
     }
 
     @GetMapping(path = "/clientsnum")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public Integer getClientsNum() throws Exception {
         System.out.println("in");
         return service.getClientsNum();
     }
 
     @GetMapping(path = "/money")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public Double getMoney() throws Exception {
         System.out.println("in");
         return service.getMoney();
     }
 
     @GetMapping(path = "/topTypes")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<DestinationChartTypeDTO> getTopTypes() throws Exception {
         System.out.println("in");
         return service.getTopTypes();
     }
 
     @GetMapping(path = "/topDestinations")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<DestinationTopDTO> getTopDestinations() throws Exception {
         System.out.println("in");
         return service.getTopDestinations();

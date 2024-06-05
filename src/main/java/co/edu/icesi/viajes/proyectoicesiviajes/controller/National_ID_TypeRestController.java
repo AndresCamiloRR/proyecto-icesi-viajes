@@ -3,6 +3,7 @@ package co.edu.icesi.viajes.proyectoicesiviajes.controller;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.National_ID_TypeDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.service.National_ID_TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class National_ID_TypeRestController {
     private National_ID_TypeService service;
 
     @GetMapping(path = "/all")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<National_ID_TypeDTO> getAll(){
         return service.findAll();
     }

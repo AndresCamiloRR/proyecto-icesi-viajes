@@ -25,19 +25,19 @@ public class ClientRestController {
     private ClientService service;
 
     @GetMapping(path = "/all")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public List<ClientDTO> getAll() {
         return service.findByStatus("Active");
     }
 
     @PostMapping(path = "/get")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
     public ClientDTO getClient(@RequestBody Long id) throws Exception {
         return service.findById(id);
     }
 
     @PostMapping(path = "/create")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public ClientDTO createClient(@RequestBody ClientDTO client) throws Exception {
         System.out.println(client);
         System.out.println("entro");
@@ -47,7 +47,7 @@ public class ClientRestController {
     }
 
     @PostMapping(path = "/delete")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT')")
     public void deleteClient(@RequestBody Long id) throws Exception {
         System.out.println("entro");
         System.out.println(id);
@@ -55,7 +55,7 @@ public class ClientRestController {
     }
 
     @PostMapping(path = "/update")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','AGENT')")
     public ClientDTO updateClient(@RequestBody ClientDTO client) throws Exception {
         System.out.println(client);
         System.out.println("entro");
