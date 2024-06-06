@@ -4,6 +4,7 @@ import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationChartTypeDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailDestinationDTO;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
@@ -48,5 +49,6 @@ public interface PlanService extends GenericService<PlanDTO, Long> {
 
     List<DestinationTopDTO> getTopDestinations();
 
+    List<Object[]> findAllPlanDetailsWithDestinationInfo();
 
 }

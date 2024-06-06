@@ -72,4 +72,11 @@ public class UserRestController {
         return service.update(user);
     }
 
+    @PostMapping(path = "/get")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public UserDTO updateUser(@RequestBody Long id) throws Exception {
+        System.out.println("find by id");
+        return service.findById(id);
+    }
+
 }

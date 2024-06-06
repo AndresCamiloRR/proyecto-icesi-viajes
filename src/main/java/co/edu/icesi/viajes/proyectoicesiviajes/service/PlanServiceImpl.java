@@ -6,6 +6,7 @@ import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationChartTypeDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailDestinationDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.mapper.DestinationMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.mapper.PlanMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.PlanRepository;
@@ -180,4 +181,7 @@ public class PlanServiceImpl implements PlanService{
     public List<DestinationTopDTO> getTopDestinations() {
         return repository.getTopDestinations();
     }
+
+    @Override
+    public List<Object[]> findAllPlanDetailsWithDestinationInfo() { return repository.findAllPlanDetailsWithDestinationInfo(); };
 }
