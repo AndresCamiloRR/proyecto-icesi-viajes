@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
        // if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.getPassword()), user.getPassword())) {
-        if (Objects.equals(credentialsDto.getPassword(), user.getPassword())) {
+        if (Objects.equals(credentialsDto.getPassword(), user.getPassword()) && !Objects.equals(user.getStatus(), "inactive")) {
             return mapper.toUserDTO(user);
         }
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
