@@ -105,27 +105,13 @@ public class PlanRestController {
         return service.getTopDestinations();
     }
 
-    public List<PlanDetailDestinationDTO> mapToDTO(List<Object[]> results) {
-        List<PlanDetailDestinationDTO> dtos = new ArrayList<>();
-        for (Object[] result : results) {
-            PlanDetailDestinationDTO dto = new PlanDetailDestinationDTO();
-            dto.setId((Long) result[0]);
-            dto.setCode((String) result[1]);
-            dto.setDescription((String) result[2]);
-            dto.setName((String) result[3]);
-            dto.setNumberOfPeople((Integer) result[4]);
-            dto.setStatus((String) result[5]);
-            dto.setRequestDate(new Date(((java.sql.Timestamp) result[6]).getTime()));
-            dto.setTripStartDate(new Date(((java.sql.Timestamp) result[7]).getTime()));
-            dto.setTripEndDate(new Date(((java.sql.Timestamp) result[8]).getTime()));
-            dto.setTotalCost((Integer) result[9]);
-            dto.setClient((Long) result[10]);
-            dto.setUser((Long) result[11]);
-            dto.setDestinationCodes(Arrays.asList(((String) result[12]).split(",")));
-            dto.setDestinationNames(Arrays.asList(((String) result[13]).split(",")));
-            dtos.add(dto);
-        }
-        return dtos;
+
+    @PostMapping(path = "/findDetail")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'VIEWER', 'AGENT')")
+    public List<PlanDetailExtendedDTO> findDetail(@RequestBody Long id){
+        System.out.println("in");
+        return service.findAllPlanDetailsWithDestinationInfo(id);
     }
+
 
 }

@@ -6,6 +6,7 @@ import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationChartTypeDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailDestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailExtendedDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -59,17 +60,8 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
     @Query(nativeQuery = true)
     List<DestinationTopDTO> getTopDestinations();
 
-    @Query("SELECT pd.id, p.code, p.description, p.name, p.numberOfPeople, p.status, " +
-            "p.requestDate, p.tripStartDate, p.tripEndDate, p.totalCost, p.client.id, p.user.id, " +
-            "string_agg(d.code, ',') AS destinationCodes, string_agg(d.name, ',') AS destinationNames " +
-            "FROM PlanDetail_Plan pdp " +
-            "JOIN pdp.plan p " +
-            "JOIN pdp.planDetail pd " +
-            "JOIN pd.destination d " +
-            "WHERE p.status = 'Active' " +
-            "GROUP BY pd.id, p.code, p.description, p.name, p.numberOfPeople, p.status, " +
-            "p.requestDate, p.tripStartDate, p.tripEndDate, p.totalCost, p.client.id, p.user.id")
-    List<Object[]> findAllPlanDetailsWithDestinationInfo();
+    @Query(nativeQuery = true)
+    List<PlanDetailExtendedDTO> findAllPlanDetailsWithDestinationInfo(Long id);
 
 
 

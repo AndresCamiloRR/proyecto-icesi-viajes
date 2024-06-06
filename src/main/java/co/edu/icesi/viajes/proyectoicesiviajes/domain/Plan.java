@@ -2,6 +2,7 @@ package co.edu.icesi.viajes.proyectoicesiviajes.domain;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailDestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.PlanDetailExtendedDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,16 +17,8 @@ import java.util.Date;
         query = "SELECT d.name as name, d.description as description, d.image as image FROM (SELECT destination_id, COUNT(*) as count FROM plan_detail GROUP BY destination_id ORDER BY count DESC LIMIT 3) AS top_destinations JOIN destination d ON top_destinations.destination_id = d.id",
         resultSetMapping = "Mapping.DestinationTopDTO")
 @NamedNativeQuery(name = "Plan.findAllPlanDetailsWithDestinationInfo",
-        query = "SELECT pd.id as id, p.code as code, p.description as description, " +
-                "p.name as name, p.number_of_people as numberOfPeople, p.status as status, " +
-                "p.request_date as requestDate, p.trip_start_date as tripStartDate, " +
-                "p.trip_end_date as tripEndDate, p.total_cost as totalCost, p.client_id as client, " +
-                "p.user_id as user, d.code as destinationCode, d.name as destinationName " +
-                "FROM plan_detail_plan pdp " +
-                "JOIN plan_detail pd ON pdp.id_plan_detail = pd.id " +
-                "JOIN plan p ON pdp.id_plan = p.id " +
-                "JOIN destination d ON pd.destination_id = d.id " +
-                "WHERE p.status = 'Active'", resultSetMapping = "Mapping.PlanDetailDestinationDTO")
+        query = "SELECT pd.food as food, pd.lodging as lodging, pd.transport as transport, pd.transfers as transfers, d.name as destination, pd.number_of_nights as numberOfNights, pd.number_of_days as numberOfDays FROM plan_detail_plan pdp JOIN plan_detail pd ON pdp.id_plan_detail = pd.id JOIN destination d ON pd.destination_id = d.id WHERE pdp.id_plan= ?1",
+        resultSetMapping = "Mapping.PlanDetailExtendedDTO")
 
 @SqlResultSetMapping(name = "Mapping.DestinationChartTypeDTO",
         classes = @ConstructorResult(targetClass = DestinationChartTypeDTO.class,
@@ -36,23 +29,15 @@ import java.util.Date;
                 columns = {@ColumnResult(name = "name"),
                         @ColumnResult(name = "description"),
                         @ColumnResult(name = "image")}))
-@SqlResultSetMapping(name = "Mapping.PlanDetailDestinationDTO",
-        classes = @ConstructorResult(targetClass = PlanDetailDestinationDTO.class,
-                columns = {
-                        @ColumnResult(name = "id"),
-                        @ColumnResult(name = "code"),
-                        @ColumnResult(name = "description"),
-                        @ColumnResult(name = "name"),
-                        @ColumnResult(name = "numberOfPeople"),
-                        @ColumnResult(name = "status"),
-                        @ColumnResult(name = "requestDate"),
-                        @ColumnResult(name = "tripStartDate"),
-                        @ColumnResult(name = "tripEndDate"),
-                        @ColumnResult(name = "totalCost"),
-                        @ColumnResult(name = "client"),
-                        @ColumnResult(name = "user"),
-                        @ColumnResult(name = "destinationCode"),
-                        @ColumnResult(name = "destinationName")}))
+@SqlResultSetMapping(name = "Mapping.PlanDetailExtendedDTO",
+        classes = @ConstructorResult(targetClass = PlanDetailExtendedDTO.class,
+                columns = {@ColumnResult(name = "food"),
+                        @ColumnResult(name = "lodging"),
+                        @ColumnResult(name = "transport"),
+                        @ColumnResult(name = "transfers"),
+                        @ColumnResult(name = "destination"),
+                        @ColumnResult(name = "numberOfNights"),
+                        @ColumnResult(name = "numberOfDays")}))
 
 
 @Entity
