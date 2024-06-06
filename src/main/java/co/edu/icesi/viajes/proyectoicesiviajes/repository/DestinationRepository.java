@@ -1,6 +1,10 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.repository;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination;
+import co.edu.icesi.viajes.proyectoicesiviajes.domain.DestinationType;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeSimpleDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +30,9 @@ public interface DestinationRepository extends JpaRepository<Destination, Long> 
     @Modifying
     @Query("UPDATE Destination d SET d.status = 'inactive' WHERE d.id = ?1")
     void deleteById(Long id);
+
+    @Query(nativeQuery = true)
+    List<DestinationTypeSimpleDTO> getTypes(long id);
 
 }
 

@@ -89,6 +89,12 @@ public class DestinationRestController {
         System.out.println("UPDATE");
         return service.update(destination);
     }
+
+    @PostMapping(path = "/getTypes")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT', 'VIEWER')")
+    public List<DestinationTypeSimpleDTO> getTypes(@RequestBody Long id){
+        return service.getTypes(id);
+    }
 }
 
 

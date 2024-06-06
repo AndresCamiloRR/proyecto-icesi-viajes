@@ -2,7 +2,10 @@ package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeSimpleDTO;
 import co.edu.icesi.viajes.proyectoicesiviajes.mapper.DestinationMapper;
+import co.edu.icesi.viajes.proyectoicesiviajes.mapper.DestinationTypeMapper;
 import co.edu.icesi.viajes.proyectoicesiviajes.repository.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -20,6 +23,9 @@ public class DestinationServiceImpl implements DestinationService {
     
     @Autowired
     DestinationMapper mapper;
+
+    @Autowired
+    DestinationTypeMapper mapperType;
 
     @Override
     public List<DestinationDTO> findByCode(String code) {
@@ -111,5 +117,10 @@ public class DestinationServiceImpl implements DestinationService {
     @Override
     public Long count() {
         return repository.count();
+    }
+
+    @Override
+    public  List<DestinationTypeSimpleDTO> getTypes(long id) {
+        return repository.getTypes(id);
     }
 }

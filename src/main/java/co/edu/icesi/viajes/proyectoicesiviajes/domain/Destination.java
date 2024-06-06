@@ -1,11 +1,21 @@
 package co.edu.icesi.viajes.proyectoicesiviajes.domain;
 
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTopDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeSimpleDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
+@NamedNativeQuery(name = "Destination.getTypes",
+        query = "Select dt.name as name, dt.description as description from destination_destination_type dtt join destination_type dt on dtt.id_destination_type = dt.id WHERE dtt.id_destination = ?1",
+        resultSetMapping = "Mapping.DestinationTypeSimpleDTO")
+@SqlResultSetMapping(name = "Mapping.DestinationTypeSimpleDTO",
+        classes = @ConstructorResult(targetClass = DestinationTypeSimpleDTO.class,
+                columns = {@ColumnResult(name = "name"),
+                        @ColumnResult(name = "description")}))
 @Entity
 @Table(name = "destination")
 @ToString

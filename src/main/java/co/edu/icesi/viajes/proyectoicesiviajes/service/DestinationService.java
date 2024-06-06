@@ -2,6 +2,8 @@ package co.edu.icesi.viajes.proyectoicesiviajes.service;
 
 import co.edu.icesi.viajes.proyectoicesiviajes.domain.Destination;
 import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeDTO;
+import co.edu.icesi.viajes.proyectoicesiviajes.dto.DestinationTypeSimpleDTO;
 
 import java.util.List;
 
@@ -19,4 +21,5 @@ public interface DestinationService extends GenericService<DestinationDTO, Long>
 
     List<DestinationDTO> findByStatus(String status);
 
+    List<DestinationTypeSimpleDTO> getTypes(long id);
 }
